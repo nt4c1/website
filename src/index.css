@@ -1,253 +1,287 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
-
 :root {
-  --bg: linear-gradient(120deg, #1a1a1a, #000000);
+  --bg: url('/bg.jpg') center/cover no-repeat fixed;
   --accent: #f06292;
   --accent-hover: #ec407a;
   --glass: rgba(255, 255, 255, 0.08);
   --glass-border: rgba(255, 255, 255, 0.1);
   --blur: 10px;
+  --text-glow: 0 0 8px #ff6ec7;
 }
-body, html, #root {
+
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
   font-family: 'Press Start 2P', cursive;
-}
-h1, h2, .navbar, .dropdown-label, .footer-link,nav, p, .subtitle, button, .start-button, .custom-dropdown{
-  font-family: 'Press Start 2P', cursive;
-  letter-spacing: auto;
-  text-transform: uppercase;
-}
-
-
-.flicker {
-  animation: flicker 1.6s infinite alternate;
-}
-
-@keyframes flicker {
-  from { opacity: 1; text-shadow: 0 0 10px #ff6ec7, 0 0 20px #ff6ec7; }
-  to   { opacity: 0.8; text-shadow: 0 0 6px #ff6ec7; }
-}
-.navbar {
-  background: rgba(255, 255, 255, 0.06);
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(12px);
-  border-radius: 14px;
-  padding: 0.6rem 1.2rem;
-}
-.dropdown-option {
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.dropdown-option:hover {
-  transform: scale(1.05) rotate(-1deg);
-}
-.start-button {
-  font-size: 1.1rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #ff4081, #7c4dff);
-  border: none;
+  background: var(--bg);
+  overflow-y: auto;
+  scroll-behavior: smooth;
   color: white;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.4s ease;
-  box-shadow: 0 0 0 transparent;
-}
-
-.start-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 18px rgba(255, 64, 129, 0.7), 0 0 12px rgba(124, 77, 255, 0.6);
 }
 
 * {
   box-sizing: border-box;
 }
 
-body, html, #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Quicksand', sans-serif;
-  background: var(--bg);
-  overflow: hidden;
+h1,
+h2,
+p,
+button,
+.dropdown-label,
+.dropdown-option,
+.footer-link {
+  font-family: 'Press Start 2P', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.canvas-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-/* ─── Navbar ─────────────────────────────────── */
+/* ─── Navbar ─── */
 .navbar {
-  position: absolute;
-  top: 1.2rem;
+  position: fixed;
+  top: 1rem;
   left: 1rem;
-  z-index: 10;
+  z-index: 1000;
   display: flex;
   gap: 0.75rem;
-  padding: 0.5rem 0.75rem;
   background: var(--glass);
-  backdrop-filter: blur(var(--blur));
   border: 1px solid var(--glass-border);
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  backdrop-filter: blur(var(--blur));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-.navbar button,
-.navbar select {
-  padding: 0.5rem 0.9rem;
-  border-radius: 0.5rem;
+.navbar button {
   background: rgba(255, 255, 255, 0.15);
   color: white;
   border: none;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
-.navbar button:hover,
-.navbar select:hover {
-  background: rgba(255, 255, 255, 0.25);
+.navbar button:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-/* ─── Page Indicator ─────────────────────────── */
+/* ─── Dropdown (Horizontal) ─── */
+.custom-dropdown {
+  position: relative;
+}
+
+.dropdown-label {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown-options-wrapper.open {
+  max-height: 100px;
+  opacity: 1;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 0.5rem;
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: 8px;
+  z-index: 999;
+  white-space: nowrap;
+}
+
+.dropdown-option {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dropdown-option:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.dropdown-option.active {
+  background: var(--accent);
+  font-weight: bold;
+}
+
+/* ─── Home ─── */
+.home-content-static {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.home-content-static h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: var(--text-glow);
+}
+
+.home-content-static p {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.start-button {
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: white;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.start-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--accent-hover), var(--accent));
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  transition: width 0.4s ease, height 0.4s ease;
+  z-index: -1;
+}
+
+.start-button:hover::before {
+  width: 300%;
+  height: 300%;
+}
+
+.start-button:hover {
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent);
+}
+
+/* ─── About Us Section ─── */
+.about-plain-text {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+  justify-content: center;
+  padding: 2rem;
+  margin: 3rem auto;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  opacity: 1;
+  transition: all 0.8s ease-out;
+}
+
+.about-plain-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-plain-text h2 {
+  color: var(--accent);
+  font-size: 1.4rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ─── Story Section ─── */
+.story-scene-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ─── Page Indicator & Subtitle ─── */
 .page-indicator {
   position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.6rem 1rem;
-  border-radius: 0.75rem;
-  pointer-events: none;
-  backdrop-filter: blur(var(--blur));
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   z-index: 10;
+  pointer-events: none;
 }
 
-/* ─── Subtitle (Story Text) ───────────────────── */
 .subtitle {
   position: absolute;
   bottom: 5rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.1rem;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   padding: 1rem 1.5rem;
-  border-radius: 0.75rem;
-  backdrop-filter: blur(var(--blur));
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
   max-width: 90%;
-  line-height: 1.5;
-  animation: fadeIn 0.8s ease-out;
-  z-index: 10;
-  color: #fff;
-}
-
-/* ─── Home Page ───────────────────────────────── */
-.home-content {
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translateX(-50%);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: white;
   text-align: center;
-  color: white;
-  padding: 1rem;
   z-index: 10;
-  animation: fadeIn 1s ease-in-out;
 }
 
-.home-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-}
-
-.home-content p {
-  font-size: 1.2rem;
-  color: #ddd;
-}
-
-.start-button {
-  margin-top: 1.5rem;
-  font-size: 1.1rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(to right, var(--accent), var(--accent-hover));
-  border: none;
-  color: white;
-  border-radius: 0.6rem;
-  cursor: pointer;
-  transition: transform 0.3s ease, background 0.4s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.start-button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(to right, var(--accent-hover), var(--accent));
-}
-
-/* ─── Animations ─────────────────────────────── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Responsive (Mobile Adjustments) ────────── */
-@media (max-width: 600px) {
-  .subtitle {
-    font-size: 0.95rem;
-    bottom: 4rem;
-  }
-
-  .navbar {
-    flex-direction: column;
-    gap: 0.5rem;
-    top: 0.75rem;
-    left: 0.75rem;
-  }
-
-  .page-indicator {
-    bottom: 1rem;
-    right: 1rem;
-    font-size: 0.9rem;
-  }
-
-  .home-content h1 {
-    font-size: 2rem;
-  }
-
-  .home-content p {
-    font-size: 1rem;
-  }
-}
+/* ─── Story Nav Buttons ─── */
 .story-nav {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 15;
 }
 
 .nav-button {
-  background: linear-gradient(135deg, #f06292, #ba68c8);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
   color: white;
-  font-size: 1.6rem;
-  padding: 0.75rem 1.25rem;
+  padding: 0.6rem 1rem;
+  font-size: 1.1rem;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
 .nav-button:hover {
   transform: scale(1.1);
-  background: linear-gradient(135deg, #ec407a, #9c27b0);
 }
 
 .nav-button:disabled {
@@ -257,337 +291,90 @@ body, html, #root {
   box-shadow: none;
 }
 
-@media (max-width: 600px) {
-  .nav-button {
-    font-size: 1.4rem;
-    padding: 0.6rem 1rem;
-  }
-}
-.navbar select {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  appearance: none;
-}
-
-/* Override default browser styles for options */
-.navbar select option {
-  color: black;
-  background: white;
-}
-.custom-dropdown {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.dropdown-label {
-  font-size: 0.9rem;
-  color: white;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-align: center;
-}
-
-.dropdown-options {
-  display: flex;
-  gap: 8px;
-  margin-top: 5px;
-  flex-wrap: wrap;
-}
-
-.dropdown-option {
-  padding: 6px 10px;
-  border: none;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.3s;
-}
-.dropdown-options .dropdown-option {
-  opacity: 0;
-  animation: dropdownItemFade 0.6s forwards;
-}
-
-.dropdown-options .dropdown-option:nth-child(1) { animation-delay: 0.1s; }
-.dropdown-options .dropdown-option:nth-child(2) { animation-delay: 0.2s; }
-.dropdown-options .dropdown-option:nth-child(3) { animation-delay: 0.3s; }
-/* ... add more as needed */
-
-@keyframes dropdownItemFade {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdown-option:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.dropdown-option.active {
-  background: #f06292;
-  font-weight: bold;
-}
-.custom-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-label {
-  font-size: 0.9rem;
-  color: white;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.dropdown-options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: rgba(30, 30, 30, 0.95);
-  padding: 0.5rem;
-  border-radius: 8px;
-  margin-top: 4px;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
-  z-index: 1000;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-}
-
-.dropdown-option {
-  white-space: nowrap;
-  padding: 6px 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.2s;
-}
-
-.dropdown-option:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.dropdown-option.active {
-  background: #f06292;
-  font-weight: bold;
-}
-.navbar button,
-.custom-dropdown .dropdown-label,
-.dropdown-option,
-.story-nav button,
-.start-button {
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.navbar button:hover,
-.dropdown-option:hover,
-.start-button:hover,
-.story-nav button:hover {
-  transform: scale(1.08);
-  background: linear-gradient(135deg, #ec407a, #9c27b0);
-}
-.home-content h1,
-.home-content p,
-.home-content .start-button {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-.home-content h1 {
-  animation-delay: 0.2s;
-}
-.home-content p {
-  animation-delay: 0.4s;
-}
-.home-content .start-button {
-  animation-delay: 0.6s;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.page-indicator,
-.subtitle {
-  animation: fadeIn 0.6s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0 }
-  to   { opacity: 1 }
-}
-.custom-dropdown {
-  position: relative;
-}
-
-.dropdown-options {
-  opacity: 0;
-  transform: translateY(-5px);
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.custom-dropdown:hover .dropdown-options {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-.dropdown-options {
-  background: rgba(30, 30, 30, 0.95);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-  border-radius: 8px;
-  padding: 0.5rem;
-  z-index: 1000;
-}
-.dropdown-options-wrapper {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease-out, opacity 0.4s ease-in;
-  opacity: 0;
-}
-
-.dropdown-options-wrapper.open {
-  max-height: 200px;
-  opacity: 1;
-}
-button {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  background: transparent;
-  color: #ffffff;
-  border: 2px solid #ec407a;
-  padding: 0.75rem 1.25rem;
-  border-radius: 12px;
-  position: relative;
-  transition: all 0.4s ease;
-  overflow: hidden;
-  z-index: 1;
-}
-
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, #ec407a, #ba68c8);
-  transition: all 0.5s ease;
-  z-index: -1;
-}
-
-button:hover::before {
-  left: 0;
-}
-
-button:hover {
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(236, 64, 122, 0.4);
-}
-/* ─── Progress Bar ─────────────────────────────── */
+/* ─── Progress Bar ─── */
 .progress-bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
-  height: 6px;
   width: 100%;
+  height: 6px;
   background: rgba(255, 255, 255, 0.1);
-  z-index: 999;
-  overflow: hidden;
+  z-index: 1000;
+  display: none;
+}
+
+.progress-bar.visible {
+  display: block;
 }
 
 .progress-fill {
   height: 100%;
-  width: 0%;
-  background: linear-gradient(
-    120deg,
-    #f06292,
-    #ba68c8,
-    #f06292,
-    #ba68c8
-  );
+  background: linear-gradient(120deg, #f06292, #ba68c8);
   background-size: 200% 100%;
   animation: shimmerFlow 2s linear infinite;
-  transition: width 0.8s ease-in-out;
-  border-radius: 0 4px 4px 0;
+  transition: width 0.5s ease-in-out;
 }
+
 @keyframes shimmerFlow {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
 }
 
-
-/* ─── Footer ───────────────────────────────────── */
-.footer {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  text-align: center;
-  font-size: 0.85rem;
-  color: white;
-  opacity: 0.85;
-}
-
+/* ─── Footer ─── */
 .footer-link {
-  color: white;
-  text-decoration: none;
-  display: inline-flex;
+  justify-content: center;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background 0.3s;
-}
-
-.footer-link:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
 
 .footer-icon {
-  width: 16px;
-  height: 16px;
+  height: 20px;
+  width: 20px;
 }
-/* Apply retro font to nav buttons */
-.navbar button,
-.footer-link,
-.start-button,
-.nav-button,
-.dropdown-label,
-.dropdown-option {
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .home-content-static h1 {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.7rem;
+    bottom: 4rem;
+  }
+
+  .about-text {
+    max-width: 60%;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .about-image {
+    flex-shrink: 0;
+  }
+
+  .about-image img {
+  width: 50px;          /* 👈 controls the width */
+  height: auto;          /* 👈 maintains aspect ratio */
+  max-height: 200px;     /* 👈 limits height visually */
+  object-fit: cover;     /* 👈 ensures it crops nicely */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+  .nav-button {
+    font-size: 1rem;
+  }
 }

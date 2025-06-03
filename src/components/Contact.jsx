@@ -12,7 +12,7 @@ export default function Contact() {
       'service_yctte18',
       'template_4gc02ch',
       e.target,
-      'x8XdIuzIHYjZkVKIu'      // replace
+      'x8XdIuzIHYjZkVKIu'
     ).then(() => {
       setSubmitted(true);
     }).catch((error) => {
@@ -42,6 +42,11 @@ export default function Contact() {
                 <button type="submit">Send</button>
               </div>
             </form>
+
+            {/* Return Home Button for users who haven't submitted */}
+            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+              <a href="/" className="start-button"> Home</a>
+            </div>
           </>
         )}
       </div>
