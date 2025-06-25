@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import emailjs from 'emailjs-com';
 import './Contact.css';
+import './CustomCursor.css';
+import CustomCursor from './CustomCursor';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -23,6 +25,7 @@ export default function Contact() {
 
   return (
     <div className="contact-page">
+      <CustomCursor />
       <div className="contact-card">
         {submitted ? (
           <div style={{ textAlign: 'center' }}>
@@ -45,7 +48,7 @@ export default function Contact() {
 
             {/* Return Home Button for users who haven't submitted */}
             <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-              <a href="/" className="start-button"> Home</a>
+              <a href="/" className="button"> Home</a>
             </div>
           </>
         )}
