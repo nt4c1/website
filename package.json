@@ -1,7 +1,7 @@
 {
   "name": "hansel-gretel-3d",
   "version": "0.0.1",
-  "homepage": "https://ankitsubedi543.github.io/website",
+  "homepage": "https://nt4c1.github.io/website",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
