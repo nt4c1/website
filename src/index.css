@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Georgia&display=swap');
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --primary-color: #ff9d00;
   --dark-bg: #0f0f0f;
@@ -10,28 +16,23 @@
   --shadow-glow: 0 0 15px rgba(241, 196, 15, 0.4);
 }
 
-/* Reset and Base */
-html,
+/* Base styles */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Georgia', serif;
   background-color: var(--dark-bg);
+  background-image: url('assets/bg.png');
+  background-size: cover;
   color: var(--text-color);
   scroll-behavior: smooth;
   line-height: 1.6;
   cursor: none;
 }
 
-button:hover~.custom-cursor,
-a:hover~.custom-cursor {
-  transform: translate(-50%, -50%) scale(1.5);
-  background: radial-gradient(circle, var(--primary-color), transparent);
-}
-
-
 .canvas-wrapper {
   position: relative;
+  padding-top: 4.5rem; /* Space for fixed navbar */
 }
 
 /* Navbar */
@@ -39,14 +40,14 @@ a:hover~.custom-cursor {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1.2rem 2rem;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: center;
   gap: 2rem;
   z-index: 1000;
   background: linear-gradient(to bottom, rgba(15, 15, 15, 0.95), transparent);
   font-family: 'Creepster', cursive;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   box-shadow: var(--shadow-glow);
 }
 
@@ -57,11 +58,14 @@ a:hover~.custom-cursor {
   border: none;
   color: var(--primary-color);
   cursor: pointer;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
   overflow: hidden;
   font-family: 'Creepster', cursive;
+  font-size: 1.2rem;
+  line-height: 1.2;
   transition: color 0.3s ease;
+  z-index: 1;
 }
 
 .navbar button:hover,
@@ -80,7 +84,7 @@ a:hover~.custom-cursor {
   height: 160%;
   background: radial-gradient(circle, var(--accent-color), transparent 70%);
   border-radius: 50%;
-  z-index: 0;
+  z-index: -1;
   animation: spread 0.6s forwards;
 }
 
@@ -98,7 +102,7 @@ a:hover~.custom-cursor {
 
 .dropdown-options {
   position: absolute;
-  top: 3rem;
+  top: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -117,7 +121,7 @@ a:hover~.custom-cursor {
   border: none;
   color: var(--text-color);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
   font-family: 'Creepster', cursive;
 }
@@ -148,7 +152,7 @@ a:hover~.custom-cursor {
 
 .hero-section p {
   margin-top: 1.2rem;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: #ccc;
   max-width: 600px;
 }
@@ -163,43 +167,11 @@ a:hover~.custom-cursor {
 }
 
 @keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(12px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
 }
 
 /* About Section */
-.about-section {
-  padding: 6rem 2rem 3rem;
-  background: url('assets/horror-bg.jpg') no-repeat center center/cover;
-  color: white;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease-out;
-  font-family: 'Creepster', cursive;
-}
-
-.about-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-  font-family: 'Creepster', cursive;
-}
-
-.about-section h2 {
-  text-align: center;
-  font-family: 'Creepster', cursive;
-  font-size: 2.8rem;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 5px #000;
-  font-family: 'Creepster', cursive;
-}
-
 .about-content {
   display: flex;
   flex-direction: row;
@@ -214,24 +186,24 @@ a:hover~.custom-cursor {
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-glow);
   font-family: 'Creepster', cursive;
+  background-image: url('assets/bg2.jpg');
+  margin: 3rem auto;
+  max-width: 1100px;
 }
 
 .about-text {
   flex: 1 1 300px;
-  font-family: 'Creepster', cursive;
 }
 
 .about-text p {
   font-size: 1.1rem;
   margin-bottom: 1rem;
   color: #ddd;
-  font-family: 'Creepster', cursive;
 }
 
 .about-text ul {
-  padding-left: 1.2rem;
   list-style: none;
-  font-family: 'Creepster', cursive;
+  padding-left: 1rem;
 }
 
 .about-text li::before {
@@ -262,13 +234,42 @@ a:hover~.custom-cursor {
   font-family: 'Creepster', cursive;
 }
 
+/* Parallax Section */
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  perspective: 1px;
+  transform-style: preserve-3d;
+}
+
+.parallax-background {
+  background: url('/assets/forest.jpg') no-repeat center center;
+  background-size: cover;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  transform: translateZ(-1px) scale(2);
+  z-index: 0;
+  opacity: 0.3;
+}
+
+.parallax-foreground {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Story Navigation */
 .story-nav {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem;
-  font-family: 'Creepster', cursive;
+  margin: 2rem 0;
 }
 
 .story-nav button {
@@ -280,6 +281,7 @@ a:hover~.custom-cursor {
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s;
+  font-family: 'Creepster', cursive;
 }
 
 .story-nav button:hover {
@@ -359,63 +361,33 @@ a:hover~.custom-cursor {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive Tweaks */
+/* Responsive */
 @media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .dropdown-options {
+    flex-direction: column;
+    top: 2.8rem;
+  }
+
   .about-content {
     flex-direction: column;
-    align-items: center;
     text-align: center;
   }
 
   .about-image {
     max-width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
-  .dropdown-options {
-    flex-direction: column;
+  .hero-section h1 {
+    font-size: 2.8rem;
   }
-}
-
-.parallax-container {
-  position: relative;
-  overflow: hidden;
-  height: 100vh;
-  width: 100%;
-  perspective: 1px;
-  transform-style: preserve-3d;
-}
-
-.parallax-background {
-  background: url('/assets/forest.jpg') no-repeat center center;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: translateZ(-1px) scale(2);
-  z-index: 0;
-  opacity: 0.3;
-}
-
-.parallax-foreground {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 }
