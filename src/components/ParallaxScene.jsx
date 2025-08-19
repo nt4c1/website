@@ -21,7 +21,9 @@ export default function ParallaxScene({ backgroundImage, title, subtitle, childr
       <div
         className="scene-background"
         ref={bgRef}
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        style={{
+          backgroundImage: `url(${import.meta.env.BASE_URL}assets/bg.jpg)`
+        }}
       />
       <div className="scene-content">
         {title && <h2 className="scene-title">{title}</h2>}

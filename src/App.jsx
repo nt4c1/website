@@ -4,6 +4,7 @@ import SceneCanvas from './components/SceneCanvas';
 import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import './index.css';
 import CustomCursor from './components/CustomCursor';
+import { Link } from 'react-router-dom';
 import ParallaxScene from './components/ParallaxScene';
 
 export default function App() {
@@ -138,9 +139,8 @@ export default function App() {
               {[...Array(totalPages)].map((_, i) => (
                 <button
                   key={`page-${i + 1}`}
-                  className={`dropdown-option ${
-                    page === i + 1 ? 'active' : ''
-                  }`}
+                  className={`dropdown-option ${page === i + 1 ? 'active' : ''
+                    }`}
                   onClick={() => handlePageClick(i + 1)}
                 >
                   Page {i + 1}
@@ -150,10 +150,11 @@ export default function App() {
           )}
         </div>
 
-        <button onClick={goToAbout}>About Us</button>
-        <a href="/contact" target="_blank" rel="noopener noreferrer">
+
+        <Link to="/contact">
           <button>Contact Us</button>
-        </a>
+        </Link>
+
       </nav>
 
       {/* Home Page */}
